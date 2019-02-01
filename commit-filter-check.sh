@@ -11,7 +11,14 @@ for i in `cat ./shafile.txt`;
 do 
   #echo $i
   gitmessage=`git log --format=%B -n 1 "$i"`;
-  echo $gitmessage
-  
+  # fix(commit-filter-check): add commit messages (AEROGEAR-038928990423)
+  messagecheck=`echo $gitmessage | grep '[( )\-\:]'`
+  if [ -z "$messagecheck"]
+  then 
+        echo "failed commit message check"
+        return false
+  else
+        echo "commit message passed"
+  fi  
 done
 rm shafile.txt
