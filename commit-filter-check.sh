@@ -13,17 +13,36 @@ do
   gitmessage=`git log --format=%B -n 1 "$i"`
 
   # fix(commit-filter-check): add commit messages (AEROGEAR-038928990423)
-  messagecheck=`echo $gitmessage | grep '[( )\-\:]'`
+  fix=`echo $gitmessage | grep fix`
+  feat=`echo $gitmessage | grep feat`
+  docs=`echo $gitmessage | grep docs`
+
+  if [ -z "fix" ]
+  then
+        messagecheck=`echo $gitmessage | grep '(fix\()?(\)\: )?(AEROGEAR\-)?'`
+  elif [ -z "feat" ]
+  then 
+        messagecheck=`echo $gitmessage | grep '(feat\()?(\)\: )?(AEROGEAR\-)?'`
+  elif [ -z "docs" ]
+  then 
+        messagecheck=`echo $gitmessage | grep '(docs\()?(\)\: )?(AEROGEAR\-)?'`
+  else
+        echo "message fails first test"
+  fi
+  
+  #(fix\()?(\)\: )?(\(AEROGEAR\-)?
+  #[()\-\:9-0]
   # check to see if the messagecheck var is empty
   if [ -z "$messagecheck" ]
   then 
-        echo "$messagecheck"
+        #echo "$messagecheck"
         echo "$gitmessage"
         echo "failed commit message check"
         rm shafile.txt >/dev/null 2>&1
         break
   else
+        echo "$messagecheck"
         echo "'$i' commit message passed"
   fi  
 done
-rm shafile.txt
+rm shafile.txt  >/dev/null 2>&1
