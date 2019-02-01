@@ -15,13 +15,15 @@ do
   # fix(commit-filter-check): add commit messages (AEROGEAR-038928990423)
   messagecheck=`echo $gitmessage | grep '[( )\-\:]'`
   # check to see if the messagecheck var is empty
-  if [ -z "$messagecheck"]
+  if [ -z "$messagecheck" ]
   then 
+        echo "$messagecheck"
+        echo "$gitmessage"
         echo "failed commit message check"
-        rm shafile.txt
-        return false
+        rm shafile.txt >/dev/null 2>&1
+        break
   else
-        echo "commit message passed"
+        echo "'$i' commit message passed"
   fi  
 done
 rm shafile.txt
