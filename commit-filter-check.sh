@@ -13,7 +13,7 @@ do
   gitmessage=`git log --format=%B -n 1 "$i"`
 
   # fix(commit-filter-check): add commit messages (AEROGEAR-038928990423)
-   messagecheck=`echo $gitmessage | grep -w "feat\|fix\|docs" | grep AEROGEAR-`
+   messagecheck=`echo $gitmessage | grep -w "feat\|fix\|docs" | grep "(AEROGEAR-" | grep "): "`
 
   #  messagecheck=`echo $gitmessage | grep '(feat\()?(\)\: )?(AEROGEAR\-)?'`
   #(fix\()?(\)\: )?(\(AEROGEAR\-)?
